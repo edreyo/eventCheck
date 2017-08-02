@@ -95,6 +95,8 @@
           { icon: 'bubble_chart', title: 'Events', to: '/eventIndex' },
           { icon: 'bubble_chart', title: 'Edit Question', to: '/questionEdit' },
           { icon: 'bubble_chart', title: 'Questions', to: '/questionIndex' },
+          { icon: 'bubble_chart', title: 'Select Group', to: '/individualGroupEdit' },
+          { icon: 'bubble_chart', title: 'Upload Picture', to: '/individualUpload' },
         ],
         miniVariant: false,
         right: true,

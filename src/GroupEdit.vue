@@ -41,7 +41,7 @@ import axios from 'axios';
     name: "register",
     data () {
       return {
-        groupEditForm: {"id":"1","name":"","active":true,"timestamp":"AAAAAAAAB9I="}
+        groupEditForm: {"id":Math.floor(Math.random() * 200),"name":"","descriptin":"","active":true,"timestamp":"AAAAAAAAB9I="}
       }
     },
     methods: {

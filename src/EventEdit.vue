@@ -103,7 +103,29 @@
                         ></v-text-field>
                         <v-time-picker v-model="eventEditForm.timeEnds"  format="HH:mm:ss" autosave></v-time-picker>
                       </v-menu>
-                    </v-flex>    
+                    </v-flex>
+                    <v-flex xs12 sm6>
+                      <v-select  
+                        label="Select Group"
+                        v-bind:items="groups"
+                        v-model="selectedGroups"
+                        item-text="name"
+                        item-value="id" 
+                        persistent-hint
+                        prepend-icon="group"                        
+                      ></v-select>
+                    </v-flex>
+                    <v-flex xs12 sm6>
+                      <v-select  
+                        label="Select Question"
+                        v-bind:items="questions"
+                        v-model="selectedGroups"
+                        item-text="title"
+                        item-value="id" 
+                        persistent-hint
+                        prepend-icon="question_answer"                        
+                      ></v-select>
+                    </v-flex>                                             
                              
                     <v-switch v-bind:label="`Active: ${eventEditForm.active.toString()}`" v-model="eventEditForm.active"></v-switch>
                   </v-layout>
@@ -134,8 +156,30 @@ import axios from 'axios';
           { text: 'Weekly' },
           { text: 'Monthly' },
         ],
-        eventEditForm: {"id":"2","name":"", "reocType":"","dateStarts":"","timeStarts":"","dateEnds":"","timeEnds":"","active":true,"timestamp":"AAAAAAAAB9I="}
+        eventEditForm: {"id":"2","name":"", "reocType":"","dateStarts":"","timeStarts":"","dateEnds":"","timeEnds":"","active":true,"timestamp":"AAAAAAAAB9I="},
+        groups: [],
+        questions: [],
       }
+    },
+    mounted()  {
+      //todo get individual from url
+      this.individual = "1";
+      axios.get("http://localhost:51306/api/groups/")
+      .then(response => {
+          response.data = response.data.filter(function(group) {
+             return group;
+           });
+        this.groups = response.data;
+      }
+      );
+      axios.get("http://localhost:51306/api/questions/")
+      .then(response => {
+          response.data = response.data.filter(function(group) {
+             return group;
+           });
+        this.questions = response.data;
+      }
+      );
     },
     methods: {
       eventPost() {

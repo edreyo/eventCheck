@@ -12,6 +12,9 @@ import GroupIndex from './GroupIndex.vue'
 import EventIndex from './EventIndex.vue'
 import QuestionEdit from './QuestionEdit.vue'
 import QuestionIndex from './QuestionIndex.vue'
+import IndividualGroupEdit from './IndividualGroupEdit.vue'
+import IndividualUpload from './IndividualUpload.vue'
+
 import Vuetify from 'vuetify'
 
 Vue.use(VueRouter);
@@ -57,6 +60,14 @@ const routes = [
   {
     path:'/questionIndex',
     component: QuestionIndex,
+  },
+  {
+    path:'/individualGroupEdit',
+    component: IndividualGroupEdit,
+  },
+    {
+    path:'/individualUpload',
+    component: IndividualUpload,
   },
 ];
 

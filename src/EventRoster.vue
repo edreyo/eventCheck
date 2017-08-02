@@ -54,11 +54,30 @@
                                       </v-card-actions>
 
 
-                                    <!--
+                                    <v-card-actions  v-if="answerType === 'boolean'">
                                       <v-spacer></v-spacer>
-                                    <v-btn icon class="indigo--text" flat="flat" @click.native="check(item)"><v-icon>thumb_up</v-icon></v-btn>
-                                    <v-btn icon class="gray--text darken-1" flat="flat" @click.native="item.dialog=false"><v-icon>thumb_down</v-icon></v-btn>
-                                    -->
+                                    <v-btn icon class="indigo--text right" flat="flat" @click.native="check(item)"><v-icon>thumb_up</v-icon></v-btn>
+                                    <v-btn icon class="gray--text darken-1 right" flat="flat" @click.native="item.dialog=false"><v-icon>thumb_down</v-icon></v-btn>
+                                    </v-card-actions>
+
+
+                                    <v-text-field v-if="answerType === 'text'"
+                                      name="input-1"
+                                      label="Answer"
+                                      textarea
+                                    ></v-text-field>
+
+                                      <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn class="primary white--text" large @click.native="submitAnswer"
+                                          v-if="answerType === 'text'">
+                                          <span>Submit</span>
+                                          <v-icon dark right large>check_circle</v-icon>
+                                        </v-btn>
+                                      </v-card-actions>
+
+
+
                                   </v-card-actions>
                                 </v-card>
                               </v-dialog>
