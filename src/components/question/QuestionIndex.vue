@@ -13,7 +13,7 @@
                       <v-template v-for="item in items" v-bind:key="item.title">
                         <v-list-tile avatar>
                           <v-list-tile-avatar class="hidden-sm-and-down">
-                            <v-icon class="green--text text--lighten-1" >group</v-icon>
+                            <v-icon class="green--text text--lighten-1" >question_answer</v-icon>
                           </v-list-tile-avatar>
                           <!--<v-list-tile-action>
                             <v-icon v-if="item.icon" class="pink--text">star</v-icon>
@@ -80,7 +80,7 @@ import axios from 'axios';
     data () {
       return {
         dialog: false,
-        eventTitle: "Groups",
+        eventTitle: "Questions",
         ex11: true,
         ex12: false,
         items: [
@@ -115,5 +115,5 @@ import axios from 'axios';
 </script>
 
 <style lang="stylus">
-  @import './stylus/main'
+  @import './../../stylus/main'
 </style>

@@ -1,5 +1,5 @@
 <template>
-      <v-container fluid>
+      <v-container fluid v-if="authenticated">
         <v-slide-y-transition mode="out-in">
           <v-layout align-center justify-center>
             <v-flex xs10>  
@@ -21,9 +21,8 @@
                   </v-layout>
                       <v-card-actions>
                         <v-spacer></v-spacer>
-                    
                         <v-btn class="primary white--text" large @click.native="groupPost">
-                          <span>Save</span>
+                          <span>Save{{item}}</span>
                           <v-icon dark right large>check_circle</v-icon>
                         </v-btn>   
                         </v-card-actions>   
@@ -39,29 +38,36 @@ import axios from 'axios';
 
   export default {
     name: "register",
+    props: ['auth', 'authenticated'],    
     data () {
       return {
-        groupEditForm: {"id":Math.floor(Math.random() * 200),"name":"","descriptin":"","active":true,"timestamp":"AAAAAAAAB9I="}
+        token: localStorage.getItem('id_token'),
+        groupEditForm: {"id":Math.floor(Math.random() * 200),"name":"","description":"","active":true,"timestamp":"AAAAAAAAB9I="},
+        item: "",
       }
     },
     methods: {
       groupPost() {
-         axios.post('http://localhost:51306/api/groups/', this.groupEditForm)
-         .then(function (response) {
-            console.log(response.status);
-            alert(JSON.stringify(response.status));
-          })
-          .catch(function (error) {
-            console.log(error);
-            alert(JSON.stringify(error.response.status));
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token'),
+        axios.post('http://localhost:51306/api/groups/', this.groupEditForm)
+        .then(function (response) {
+          console.log(response.status);
+          alert(JSON.stringify(response.status));
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert(JSON.stringify(error.response.status));
 
-          });
+        });
       }
+    },
+    mounted() {
+      this.item = this.$route.params.id
     }
   }
  
 </script>
 
 <style lang="stylus">
-  @import './stylus/main'
+  @import './../../stylus/main'
 </style>

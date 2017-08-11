@@ -45,5 +45,5 @@ import Axios from 'axios';
 </script>
 
 <style lang="stylus">
-  @import './stylus/main'
+  @import './../../stylus/main'
 </style>

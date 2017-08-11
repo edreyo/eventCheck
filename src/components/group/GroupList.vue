@@ -12,8 +12,8 @@
                       <v-subheader v-text="eventTitle"></v-subheader>
                       <v-template v-for="item in items" v-bind:key="item.title">
                         <v-list-tile avatar>
-                          <v-list-tile-avatar class="hidden-xs-only">
-                            <v-icon class="green--text text--lighten-1" >event</v-icon>
+                          <v-list-tile-avatar class="hidden-sm-and-down">
+                            <img v-bind:src="item.avatar"/>
                           </v-list-tile-avatar>
                           <!--<v-list-tile-action>
                             <v-icon v-if="item.icon" class="pink--text">star</v-icon>
@@ -23,11 +23,6 @@
                           </v-list-tile-content>
                           <div class="hidden-sm-and-down">
                             <v-list-tile-action>
-                              <v-btn icon ripple @click.native='item.dialog = true' >
-                                <v-icon class="pink--text text--lighten-1">archive</v-icon>
-                              </v-btn>
-                            </v-list-tile-action>
-                            <v-list-tile-action >
                                 <v-dialog v-model="item.dialog" persistent>
                                   <!--<v-switch  v-model="item.study" slot="activator"></v-switch>-->
                                   <!--<v-btn primary dark slot="activator">Open Dialog</v-btn>-->
@@ -42,6 +37,11 @@
                                   </v-card>
                                 </v-dialog>
                                 <!--<v-switch sm6 v-model="ex11"></v-switch>-->
+                            </v-list-tile-action>
+                            <v-list-tile-action>
+                              <v-btn icon ripple @click.native='item.dialog = true'>
+                                <v-icon class="pink--text text--lighten-1">archive</v-icon>
+                              </v-btn>
                             </v-list-tile-action>
                           </div>
                           <v-list-tile-action>
@@ -80,18 +80,34 @@ import axios from 'axios';
     data () {
       return {
         dialog: false,
-        eventTitle: "Events",
+        eventTitle: "Here is Everybody",
         ex11: true,
         ex12: false,
-        items: [
-          { memberid:'01', eventId: '01', study: false, icon: true, title: 'Jason Oner', avatar: 'https://vuetifyjs.com/static/doc-images/lists/1.jpg', dialog:false },
-          { memberid:'02', eventId: '01', study: false, title: 'Travis Howard', avatar: 'https://vuetifyjs.com/static/doc-images/lists/2.jpg', dialog:false },
-          { memberid:'03', eventId: '01', study: false, title: 'Ali Connors', avatar: 'https://vuetifyjs.com/static/doc-images/lists/3.jpg', dialog:false },
-          { memberid:'04', eventId: '01', study: false, title: 'Cindy Baker', avatar: 'https://vuetifyjs.com/static/doc-images/lists/4.jpg', dialog:false },
-        ]
+        items: []
       }
     },
+    mounted() {
+      this.fetchData()
+    },
     methods: {
+      fetchData() {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token'),      
+        axios.get("http://localhost:51306/api/groupsIndividuals/109")//, {
+        //axios.get("http://localhost:51306/api/myGroups/")//, {
+          //params:{
+          // phone:"10"
+          //  }
+        //})
+        .then(response => {
+            response.data = response.data.filter(function(item) {
+            item["dialog"] = false;
+            //item["attendance"] = false;
+              return item;
+            });
+          this.items = response.data;
+        }
+        );
+      },
       check(item) {
         item.dialog = false
         //alert(JSON.stringify(item));
@@ -115,5 +131,5 @@ import axios from 'axios';
 </script>
 
 <style lang="stylus">
-  @import './stylus/main'
+  @import './../../stylus/main'
 </style>

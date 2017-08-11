@@ -12,8 +12,8 @@
                       <v-subheader v-text="eventTitle"></v-subheader>
                       <v-template v-for="item in items" v-bind:key="item.title">
                         <v-list-tile avatar>
-                          <v-list-tile-avatar class="hidden-sm-and-down">
-                            <img v-bind:src="item.avatar"/>
+                          <v-list-tile-avatar class="hidden-xs-only">
+                            <v-icon class="green--text text--lighten-1" >event</v-icon>
                           </v-list-tile-avatar>
                           <!--<v-list-tile-action>
                             <v-icon v-if="item.icon" class="pink--text">star</v-icon>
@@ -23,6 +23,11 @@
                           </v-list-tile-content>
                           <div class="hidden-sm-and-down">
                             <v-list-tile-action>
+                              <v-btn icon ripple @click.native='item.dialog = true' >
+                                <v-icon class="pink--text text--lighten-1">archive</v-icon>
+                              </v-btn>
+                            </v-list-tile-action>
+                            <v-list-tile-action >
                                 <v-dialog v-model="item.dialog" persistent>
                                   <!--<v-switch  v-model="item.study" slot="activator"></v-switch>-->
                                   <!--<v-btn primary dark slot="activator">Open Dialog</v-btn>-->
@@ -37,11 +42,6 @@
                                   </v-card>
                                 </v-dialog>
                                 <!--<v-switch sm6 v-model="ex11"></v-switch>-->
-                            </v-list-tile-action>
-                            <v-list-tile-action>
-                              <v-btn icon ripple @click.native='item.dialog = true'>
-                                <v-icon class="pink--text text--lighten-1">archive</v-icon>
-                              </v-btn>
                             </v-list-tile-action>
                           </div>
                           <v-list-tile-action>
@@ -80,7 +80,7 @@ import axios from 'axios';
     data () {
       return {
         dialog: false,
-        eventTitle: "Here is Everybody",
+        eventTitle: "Events",
         ex11: true,
         ex12: false,
         items: [
@@ -115,5 +115,5 @@ import axios from 'axios';
 </script>
 
 <style lang="stylus">
-  @import './stylus/main'
+  @import './../../stylus/main'
 </style>
