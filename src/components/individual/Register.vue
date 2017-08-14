@@ -3,10 +3,11 @@
         <v-slide-y-transition mode="out-in">
           <v-layout align-center justify-center>
             <v-flex xs10>  
-            <v-layout row wrap>
-            <!--<h5>Sign Up </h5> -->
-            </v-layout>             
-              <v-container >
+            <v-card> 
+              <v-layout row wrap>
+              <!--<h5>Sign Up </h5> -->
+              </v-layout>             
+                <v-container >
                   <v-layout row wrap>
                     <v-flex xs12 sm6>
                       <v-text-field
@@ -14,7 +15,7 @@
                         label="First Name"
                         prepend-icon="perm_identity"
                         required
-                        v-model = 'registrationForm.fname'
+                        v-model = 'individual.fname'
                       ></v-text-field>
                     </v-flex>            
 
@@ -24,7 +25,7 @@
                         label="Last Name"
                         required
                         prepend-icon="supervisor_account"
-                        v-model = 'registrationForm.lname'
+                        v-model = 'individual.lname'
                       ></v-text-field>
                     </v-flex>
 
@@ -35,11 +36,11 @@
                         label="Phone Number"
                         required
                         prepend-icon="phone"
-                        v-model = 'registrationForm.phone'
+                        v-model = 'individual.phone'
                       ></v-text-field>
                     </v-flex>
 
-                    <v-flex xs12 sm6>
+                    <!-- <v-flex xs12 sm6>
                       <v-text-field
                         name="input-1-3"
                         label="Email"
@@ -47,9 +48,9 @@
                         prepend-icon="email"
                         v-model = 'registrationForm.email'
                       ></v-text-field>
-                    </v-flex>
+                    </v-flex> -->
 
-                    <v-flex xs12 sm6>
+                    <!-- <v-flex xs12 sm6>
                       <v-text-field
                         name="input-1-3"
                         label="Password"
@@ -62,9 +63,9 @@
                         prepend-icon="lock"
                         v-model = 'registrationForm.password'
                       ></v-text-field>
-                    </v-flex>
+                    </v-flex> -->
                 
-                    <v-flex xs12 sm6>
+                    <!-- <v-flex xs12 sm6>
                       <v-text-field
                         name="input-1-3"
                         label="Re-type Password"
@@ -76,7 +77,7 @@
                         type="password"
                         prepend-icon="lock"
                       ></v-text-field>
-                    </v-flex>
+                    </v-flex> -->
                   </v-layout>
 
                   <!--
@@ -92,15 +93,17 @@
 
 
 
+ 
+                  </v-container>
+                </v-card>
                   <v-card-actions>
                     <v-spacer></v-spacer>
                 
-                    <v-btn class="primary white--text" large @click.native="register">
-                      <span>Register{{counter}}</span>
+                    <v-btn class="primary white--text" large @click.native="updateInfo">
+                      <span>Register</span>
                       <v-icon dark right large>check_circle</v-icon>
                     </v-btn>   
-                  </v-card-actions>   
-                  </v-container>
+                  </v-card-actions>  
                 </v-flex>
             </v-layout>  
         </v-slide-y-transition>
@@ -131,40 +134,79 @@ import axios from 'axios';
         rightDrawer: false,
         title: 'Sign Up',
         registrationForm: {"phone":"","email":"","fname":"","lname":"","kid":false,"active":true,"familyId":"","timestamp":"AAAAAAAAB9I=", "password":""},
-        image:''
+        image:'',
+        individual:{id:"","phone":"","email":"","fname":"","lname":"1","kid":false,"active":true,"familyId":"","timestamp":"AAAAAAAAB9I=", "password":""},
       }
     },
-    methods: {
-    onFileChange(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length)
-        return;
-      this.createImage(files[0]);
-    },
-    createImage(file) {
-      var image = new Image();
-      var reader = new FileReader();
-      var vm = this;
+    mounted() {
+      //isRegistered = 
+      this.register();
 
-      reader.onload = (e) => {
-        vm.image = e.target.result;
-      };
-      reader.readAsDataURL(file);
     },
-    removeImage: function (e) {
-      this.image = '';
-    },
-    register() {
-         //Axios.get('http://localhost:65473/api/Individuals/1234567890');
-//       Axios.post('/api/Individuals', 'JobsController@store')
-         axios.post('http://localhost:51306/api/Individuals/', this.registrationForm)
-         .then(function (response) {
-            console.log(response.status);
-            alert(JSON.stringify(response.status));
-          })
+    methods: {
+      register() {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token'),      
+        axios.post("http://localhost:51306/api/Individuals/")//, {
+        //axios.get("http://localhost:51306/api/myGroups/")//, {
+          //params:{
+          // phone:"10"
+          //  }
+        //})
+        .then(response => {
+            //response.data = response.data.filter(function(item) {
+            //item["dialog"] = false;
+            ////item["attendance"] = false;
+             // return item;
+            //}
+            //);
+            console.log(response.data)
+          this.individual = response.data;
+          if(response.data.phone != null && response.data.fname != null) {
+            if(response.data.avatar == null) {
+              this.$router.push({path:"/IndividualUpload"})
+            } else {
+              this.$router.push({path:"/eventIndex"})
+            }
+          }
+        }
+        );
+      },
+      onFileChange(e) {
+        var files = e.target.files || e.dataTransfer.files;
+        if (!files.length)
+          return;
+        this.createImage(files[0]);
+      },
+      createImage(file) {
+        var image = new Image();
+        var reader = new FileReader();
+        var vm = this;
+
+        reader.onload = (e) => {
+          vm.image = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      },
+      removeImage: function (e) {
+        this.image = '';
+      },
+      updateInfo() {
+        console.log(this.individual);
+          //Axios.get('http://localhost:65473/api/Individuals/1234567890');
+  //       Axios.post('/api/Individuals', 'JobsController@store')
+          axios.put('http://localhost:51306/api/Individuals/'+ this.individual.id, this.individual)
+          .then(function (response) {
+              if(this.individual.avatar == null) {
+                alert('individualupload comming');
+                this.$router.push({path:"/IndividualUpload"});
+            } else {
+                this.$router.push({path:"/eventIndex"});
+            }
+          }
+          )
           .catch(function (error) {
             console.log(error);
-            alert(JSON.stringify(error.response.status));
+            //alert(JSON.stringify(error.response.status));
 
           });
       }

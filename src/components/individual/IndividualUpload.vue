@@ -49,7 +49,7 @@
 
 <script>
 import axios from 'axios';
-import { CLOUDINARY_CONFIG } from './auth0-variables'
+
   export default {
     name: "IndividualGroupEdit",
     data () {

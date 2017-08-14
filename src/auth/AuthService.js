@@ -17,7 +17,7 @@ export default class AuthService {
       domain: AUTH_CONFIG.domain,
       clientID: AUTH_CONFIG.clientId,
       redirectUri: AUTH_CONFIG.callbackUrl,
-      audience: AUTH_CONFIG.audience, //'https://eventcheck/',//`https://${AUTH_CONFIG.domain}/userinfo`,
+      audience: AUTH_CONFIG.audience, //`https://${AUTH_CONFIG.domain}/userinfo`,
       responseType: 'token id_token',
       scope: 'openid profile email'
       //scope: 'openid'
@@ -27,6 +27,7 @@ export default class AuthService {
   
 
   login () {
+    //this.auth0.redirect.signupAndAuthorize()
     this.auth0.authorize()
   }
 
@@ -38,9 +39,9 @@ export default class AuthService {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult)
-        router.replace('groupEdit')
+        router.replace('register')
       } else if (err) {
-        router.replace('groupEdit')
+        router.replace('register')
         console.log(err)
         alert(`Error: ${err.error}. Check the console for further details.`)
       }
@@ -66,7 +67,7 @@ export default class AuthService {
     this.userProfile = null
     this.authNotifier.emit('authChange', false)
     // navigate to the home route
-    router.replace('groupEdit')
+    router.replace('/')
   }
 
   isAuthenticated () {

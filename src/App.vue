@@ -1,6 +1,7 @@
 <template>
   <v-app light>
     <v-navigation-drawer
+      v-if="authenticated"
       temporary
       :mini-variant="miniVariant"
       :clipped="!clipped"
@@ -70,7 +71,11 @@
         </v-list-tile> -->
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar class="primary" :dark="true" fixed>
+    <v-toolbar
+      v-if="authenticated" 
+      class="primary"  
+      :dark="true" 
+      fixed>
       <v-toolbar-side-icon @click.native.stop="drawer = !drawer"></v-toolbar-side-icon>
       <!--<v-btn 
         icon
@@ -101,7 +106,7 @@
         <v-icon>more_vert</v-icon>
       </v-btn>
     </v-toolbar>
-    <main>
+    <main v-if="authenticated">
       <button
         class="btn btn-primary btn-margin"
         v-if="!authenticated"
@@ -124,7 +129,12 @@
         :authenticated="authenticated">
       </router-view>
     </main>
+    <router-view v-if="!authenticated"
+        :auth="auth" 
+        :authenticated="authenticated">
+    </router-view>
     <v-navigation-drawer
+      v-if="authenticated"
       temporary
       :right="right"
       v-model="rightDrawer"
@@ -138,7 +148,9 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-footer :fixed="fixed">
+    <v-footer 
+      v-if="authenticated"
+      :fixed="fixed">
       <span>&copy; 2017</span>
     </v-footer>
   </v-app>
@@ -209,6 +221,17 @@ const { login, logout, authenticated, authNotifier, signup } = auth
         title: 'Event Checker',
         auth,
         authenticated,
+      }
+    },
+    mounted() {
+        //auth.handleAuthentication()
+        //alert(authNotifier.authenticated);
+        //alert(this.auth.authenticated);
+        //alert(this.$router.currentRoute.path)
+      if(this.$router.currentRoute.path != '/callback'){
+        if(!this.auth.authenticated) {
+          this.$router.push({path:"/login"});
+          }
       }
     },
     methods: {

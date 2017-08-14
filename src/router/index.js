@@ -15,6 +15,7 @@ import QuestionIndex from './../components/question/QuestionIndex.vue'
 import IndividualGroupEdit from './../components/individual/IndividualGroupEdit.vue'
 import IndividualUpload from './../components/individual/IndividualUpload.vue'
 import CallBack from './../components/CallBack.vue'
+import Login from './../components/Login.vue'
 
 Vue.use(Router);
 //Vue.use(Vuetify);
@@ -22,11 +23,15 @@ Vue.use(Router);
 const routes = [
   {
     path:'/',
-    component: GroupEdit,
+    component: Login,
   },
   {
     path:'/callback',
     component: CallBack,
+  },
+  {
+    path:'/login',
+    component: Login,
   },
   {
     name:'Register',

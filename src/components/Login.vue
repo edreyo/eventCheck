@@ -5,15 +5,16 @@
 </template>
 
 <script>
-  export default {
+  export default {  
     name: 'callback',
     props: ['auth'],
     data () {
       this.auth.handleAuthentication()
+      //!this.auth.authenticated ? this.auth.login() : {}
       return {}
     },
     mounted() {
-      //this.$router.push({path:"callback"})
+      this.auth.login()
     }
   }
 </script>
