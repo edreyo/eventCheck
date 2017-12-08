@@ -5,16 +5,16 @@ Put Individual
 Get AllTheEvents
 Get AllTheEvents from Group of this Individual
 
-Get theEvents
-Post theEvents
-Put theEvents
+Get theEvent
+Post theEvent
+Put theEvent
 
 Get AllGroups
 Get AllGroups from Individual
 
-Get Groups
-Post Groups
-Put Groups
+Get Group
+Post Group
+Put Group
 
 Get AllQuestions
 Get AllQuestions with Active
