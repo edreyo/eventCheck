@@ -1,0 +1,24 @@
+Get Individual
+Post Individual
+Put Individual
+
+Get AllTheEvents
+Get AllTheEvents from Group of this Individual
+
+Get theEvents
+Post theEvents
+Put theEvents
+
+Get AllGroups
+Get AllGroups from Individual
+
+Get Groups
+Post Groups
+Put Groups
+
+Get AllQuestions
+Get AllQuestions with Active
+
+Get Question
+Post Question
+Put Question
